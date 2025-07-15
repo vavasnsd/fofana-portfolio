@@ -788,6 +788,21 @@ ul {
     display: none;
 }
 
+/* สไตล์สำหรับ Error Message ของฟอร์ม */
+.error-message {
+    color: #ff6b81; /* สีชมพู */
+    font-size: 14px;
+    margin-top: 5px;
+    display: block; /* แสดงเป็นบล็อกแยกบรรทัด */
+}
+
+/* สไตล์เมื่อ input มี error */
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ff6b81; /* เปลี่ยนขอบเป็นสีชมพูเมื่อมี error */
+}
+
+
 /* Media Queries สำหรับ Responsive Design (ปรับตามขนาดหน้าจอ) */
 @media (max-width: 992px) {
     /* Projects Grid (ใช้ชื่อ .projects-grid ใน HTML) */
@@ -826,7 +841,7 @@ ul {
     }
     .navbar .nav-links.active {
         transform: translateX(0); /* เลื่อนเข้ามาเมื่อ 'active' */
-        display: flex; /* แสดงเมนู */
+        display: flex; /* **สำคัญ: ให้แสดงผลด้วย flex** */
     }
     .navbar .nav-links li {
         margin: 15px 0; /* ระยะห่างระหว่างลิงก์ในเมนูมือถือ */
@@ -1076,114 +1091,3 @@ ul {
         font-size: 24px;
     }
 }
-/* ========================================= */
-/* ส่วน สไตล์สำหรับหน้า Service Details (service-details.html) */
-/* ========================================= */
-
-.service-detail-section {
-    padding: 80px 0;
-    background-color: #fff;
-    text-align: center;
-}
-
-.service-detail-content {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-.service-detail-content .detail-icon {
-    font-size: 60px;
-    color: #ff6b81;
-    margin-bottom: 30px;
-}
-
-.service-detail-content h2 {
-    font-size: 36px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.service-detail-content p {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.service-detail-content h3 {
-    font-size: 24px;
-    color: #333;
-    margin-top: 40px;
-    margin-bottom: 15px;
-}
-
-.service-detail-content ul {
-    list-style-type: disc; /* ใช้ bullet point */
-    list-style-position: inside; /* ให้ bullet point อยู่ด้านใน */
-    text-align: left; /* จัดรายการชิดซ้าย */
-    margin-left: 20px; /* เยื้องเล็กน้อย */
-    margin-bottom: 25px;
-}
-
-.service-detail-content ul li {
-    font-size: 17px;
-    color: #555;
-    margin-bottom: 10px;
-}
-
-.service-detail-content .btn-primary {
-    margin-top: 30px;
-}
-
-/* Media Queries สำหรับหน้า Service Details */
-@media (max-width: 768px) {
-    .service-detail-content {
-        padding: 30px;
-    }
-    .service-detail-content h2 {
-        font-size: 30px;
-    }
-    .service-detail-content p {
-        font-size: 16px;
-    }
-    .service-detail-content h3 {
-        font-size: 20px;
-    }
-    .service-detail-content ul li {
-        font-size: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .service-detail-content {
-        padding: 20px;
-    }
-    .service-detail-content h2 {
-        font-size: 26px;
-    }
-}
-/* สไตล์สำหรับ Loading State */
-.loading-state {
-    text-align: center;
-    font-size: 24px;
-    color: #ff6b81;
-    padding: 50px 0;
-    display: none; /* **สำคัญ:** ซ่อนไว้โดยค่าเริ่มต้น */
-}
-
-.loading-state i {
-    margin-right: 15px;
-}
-
-/* เมื่อ Loading State ทำงาน */
-.service-detail-section.loading .loading-state {
-    display: block; /* แสดง Loading State */
-}
-.service-detail-section.loading .service-detail-content {
-    display: none; /* ซ่อนเนื้อหาหลักขณะโหลด */
-}
-

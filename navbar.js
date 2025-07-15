@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburgerMenu = document.getElementById('hamburgerMenu');
     const navLinks = document.getElementById('navLinks');
 
+    // ตรวจสอบว่า element ถูกพบก่อนเพิ่ม Event Listener
     if (hamburgerMenu && navLinks) {
         hamburgerMenu.addEventListener('click', () => {
             navLinks.classList.toggle('active'); // เพิ่ม/ลบคลาส 'active' เมื่อคลิก
@@ -15,5 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+    } else {
+        console.error('Hamburger menu or navigation links not found. Check HTML IDs.');
     }
 });
