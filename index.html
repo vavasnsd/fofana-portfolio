@@ -7,18 +7,126 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <style>
+        /* เพิ่มเติมเฉพาะ Responsive Navbar + Overlay */
+        .logo-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            margin-left: 2px;
+            background: #ff6b81;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            z-index: 1101;
+            transition: 0.2s;
+        }
+        .hamburger-menu span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            margin: 4px 0;
+            background: #222;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+        @media (max-width: 1020px) {
+            .navbar .nav-links,
+            .navbar .contact-button {
+                display: none;
+            }
+            .hamburger-menu {
+                display: flex;
+            }
+        }
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #fff6f7;
+            z-index: 1100;
+            animation: fadeIn 0.18s;
+        }
+        .mobile-overlay.active {
+            display: block;
+        }
+        .mobile-overlay .overlay-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .mobile-overlay ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+        .mobile-overlay ul li {
+            margin: 22px 0;
+            text-align: center;
+        }
+        .mobile-overlay ul li a {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #222;
+            transition: color 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .mobile-overlay ul li a:hover {
+            color: #ff6b81;
+        }
+        .mobile-overlay .contact-button {
+            font-size: 22px;
+            padding: 17px 62px;
+            margin-top: 18px;
+            background: #ff6b81;
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            box-shadow: 0 2px 12px 0 rgba(255,107,129,0.09);
+        }
+        .mobile-overlay .contact-button:active,
+        .mobile-overlay .contact-button:hover {
+            background: #e65c71;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        body.menu-open {
+            overflow: hidden;
+        }
+    </style>
     <script defer src="js/form-validation.js"></script>
     <script defer src="js/navbar.js"></script>
+    <script defer src="js/scroll-to-top.js"></script> 
 </head>
 <body>
 
+    <!-- ================= HEADER & NAVBAR ================= -->
     <header class="hero-section" id="hero">
         <nav class="navbar">
-            <div class="logo">Fofana.</div>
+            <div class="logo">Fofana.<span class="logo-dot"></span></div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#services">Services</a></li>
@@ -29,10 +137,24 @@
             </ul>
             <button class="contact-button">Hire Us</button>
             <div class="hamburger-menu" id="hamburgerMenu">
-                <i class="fas fa-bars"></i>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-overlay" id="mobileOverlay">
+                <div class="overlay-content">
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="projects.html">Project</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">My Projects</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                    <button class="contact-button">Hire Us</button>
+                </div>
             </div>
         </nav>
-
         <div class="hero-content">
             <div class="text-content">
                 <p class="greeting">Hi There, I'm Fofana</p>
@@ -44,11 +166,13 @@
                 </div>
             </div>
             <div class="image-content">
-                <img src="images/profile-pic.jpg.png" alt="Profile Picture"> <img src="images/bg-peoples.png" alt="Background Pattern" class="bg-people-image">
+                <img src="images/profile-pic.jpg.png" alt="Profile Picture"> 
+                <img src="images/bg-peoples.png" alt="Background Pattern" class="bg-people-image">
             </div>
         </div>
     </header>
 
+    <!-- ================ SERVICES SECTION ================ -->
     <section class="services-section" id="services">
         <div class="service-box">
             <div class="icon-container"><i class="fas fa-graduation-cap"></i></div>
@@ -72,6 +196,7 @@
         </div>
     </section>
 
+    <!-- ================ ABOUT ME SECTION ================ -->
     <section class="about-me-section" id="about">
         <div class="about-me-content">
             <div class="image-wrapper">
@@ -79,15 +204,8 @@
             </div>
             <div class="text-wrapper">
                 <h2 class="section-title">About Me</h2>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, molestias! Voluptatum, inventore!
-                    Aliquid assumenda culpa, veritatis cumque, reiciendis modi, impedit earum corporis
-                    consectetur provident sapiente. Vitae minima facilis recusandae.
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus temporibus, iste, culpa
-                    repellendus doloremque nulla ad cumque, unde provident aut illum.
-                </p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, molestias! Voluptatum, inventore! Aliquid assumenda culpa, veritatis cumque, reiciendis modi, impedit earum corporis consectetur provident sapiente. Vitae minima facilis recusandae.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus temporibus, iste, culpa repellendus doloremque nulla ad cumque, unde provident aut illum.</p>
                 <div class="about-info">
                     <p><strong>Name:</strong> Fofana</p>
                     <p><strong>Age:</strong> 25 Years</p>
@@ -101,6 +219,7 @@
         </div>
     </section>
 
+    <!-- ================ SKILLS SECTION ================ -->
     <section class="skills-section" id="skills">
         <div class="skills-content">
             <h2 class="section-title">My Skills</h2>
@@ -163,6 +282,7 @@
         </div>
     </section>
 
+    <!-- ================ PROJECTS SECTION ================ -->
     <section class="projects-section" id="projects">
         <div class="projects-content">
             <h2 class="section-title">My Projects</h2>
@@ -195,65 +315,73 @@
         </div>
     </section>
 
-    <section class="contact-section" id="contact">
-        <div class="contact-content">
-            <h2 class="section-title">Contact Me</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    <p>มีข้อสงสัยหรืออยากร่วมงานกันใช่ไหม? ติดต่อฉันได้เลย!</p>
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Bangkok, Thailand</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>+66 123 456 789</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>your.email@example.com</span>
-                    </div>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3>Send Me a Message</h3>
-                    <form id="contactForm" novalidate> <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
-                            <span class="error-message" id="nameError"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" required>
-                            <span class="error-message" id="emailError"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                            <span class="error-message" id="subjectError"></span>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-                            <span class="error-message" id="messageError"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
+    <!-- ================ CONTACT SECTION ================ -->
+ <section class="contact-section" id="contact">
+  <div class="contact-content">
+    <h2 class="section-title">Contact Me</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Get in Touch</h3>
+        <p>มีข้อสงสัยหรืออยากร่วมงานกันใช่ไหม? ติดต่อฉันได้เลย!</p>
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Bangkok, Thailand</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-phone-alt"></i>
+          <span>+66 123 456 789</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <span>your.email@example.com</span>
+        </div>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>Send Me a Message</h3>
+        <form id="contactForm" novalidate>
+          <div class="form-group">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <span class="error-message" id="nameError"></span>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <span class="error-message" id="emailError"></span>
+          </div>
+          <div class="form-group">
+            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            <span class="error-message" id="subjectError"></span>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+            <span class="error-message" id="messageError"></span>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <footer class="footer-section">
-            <div class="footer-content">
-                <p>&copy; 2024 Fofana. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                </div>
-            </div>
-        </footer>
 
-    </body>
-    </html>
+
+    <!-- ================ FOOTER SECTION ================ -->
+<footer class="footer-section">
+  <div class="footer-content-row">
+    <div class="footer-left">
+      &copy; 2024 Fofana. All rights reserved.
+    </div>
+    <div class="footer-right">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

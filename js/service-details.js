@@ -55,62 +55,68 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    const serviceDetailSection = document.querySelector('.service-detail-section'); // อ้างอิง section หลัก
+    const serviceDetailSection = document.querySelector('.service-detail-section');
     const loadingState = document.getElementById('loadingState');
     const serviceDetailContent = document.getElementById('serviceDetailContent');
 
     // ตั้งค่า Loading State เริ่มต้น
-    // **สำคัญ:** เพิ่มคลาส 'loading' ทันทีที่ JavaScript เริ่มทำงาน เพื่อให้ CSS ซ่อนเนื้อหาหลักและแสดง Loading Icon
-    serviceDetailSection.classList.add('loading'); 
+    if (serviceDetailSection) serviceDetailSection.classList.add('loading'); 
+    
+    // **สำคัญ:** อ้างอิง element ทั้งหมดที่ใช้ก่อน setTimeout
+    const serviceTitleElement = document.getElementById('serviceTitle');
+    const serviceTaglineElement = document.getElementById('serviceTagline');
+    const detailIconElement = document.querySelector('.detail-icon i'); // เลือกแท็ก <i> ภายใน .detail-icon
+    const detailHeadingElement = document.getElementById('detailHeading');
+    const detailDescriptionElement = document.getElementById('detailDescription');
+    const benefitsTextElement = document.getElementById('benefitsText');
+    const featureListElement = document.getElementById('featureList');
 
     // จำลองการโหลดข้อมูล (ใช้ setTimeout เพื่อให้เห็น Loading State ชัดเจนขึ้น)
     setTimeout(() => {
-        // ดึง Service ID จาก URL (Query Parameter)
         const urlParams = new URLSearchParams(window.location.search);
         const serviceId = urlParams.get('id');
 
-        // แสดงผลข้อมูลบริการ
         if (serviceId && servicesData[serviceId]) {
             const service = servicesData[serviceId];
 
-            document.getElementById('serviceTitle').textContent = service.title;
-            document.getElementById('serviceTagline').textContent = service.tagline;
+            // ตรวจสอบก่อนกำหนดค่าให้กับ element ทุกครั้ง
+            if (serviceTitleElement) serviceTitleElement.textContent = service.title;
+            if (serviceTaglineElement) serviceTaglineElement.textContent = service.tagline;
+            if (detailIconElement) detailIconElement.className = service.icon;
+            if (detailHeadingElement) detailHeadingElement.textContent = service.title;
+            if (detailDescriptionElement) detailDescriptionElement.textContent = service.description;
+            if (benefitsTextElement) benefitsTextElement.textContent = service.benefits;
 
-            const detailIconElement = document.querySelector('.detail-icon i'); // เลือกแท็ก <i> ภายใน .detail-icon
-            if (detailIconElement) {
-                detailIconElement.className = service.icon; // ตั้งค่า class icon
+            if (featureListElement) { // ตรวจสอบ featureListElement ก่อนใช้งาน
+                featureListElement.innerHTML = ''; // ล้างรายการเก่า
+                service.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featureListElement.appendChild(li);
+                });
             }
-
-            document.getElementById('detailHeading').textContent = service.title;
-            document.getElementById('detailDescription').textContent = service.description;
-            document.getElementById('benefitsText').textContent = service.benefits;
-
-            const featureList = document.getElementById('featureList');
-            featureList.innerHTML = ''; // ล้างรายการเก่า
-            service.features.forEach(feature => {
-                const li = document.createElement('li');
-                li.textContent = feature;
-                featureList.appendChild(li);
-            });
-
-            // เปลี่ยน Title ของหน้าเว็บให้ตรงกับ Service Title
+            
             document.title = `Fofana - ${service.title}`;
 
         } else {
-            // ถ้าไม่พบ serviceId หรือข้อมูล ให้แสดงหน้า Service Not Found
-            document.getElementById('serviceTitle').textContent = 'Service Not Found';
-            document.getElementById('serviceTagline').textContent = 'The service you are looking for does not exist.';
-            serviceDetailContent.innerHTML = `
-                <div class="detail-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                <h2>Service Not Found</h2>
-                <p>We're sorry, but the service you requested could not be found. Please go back to our <a href="index.html#services">Services page</a> to explore our offerings.</p>
-                <a href="index.html#services" class="btn btn-primary">Back to Services</a>
-            `;
+            // ถ้าไม่พบ serviceId หรือข้อมูล
+            if (serviceTitleElement) serviceTitleElement.textContent = 'Service Not Found';
+            if (serviceTaglineElement) serviceTaglineElement.textContent = 'The service you are looking for does not exist.';
+            if (serviceDetailContent) { // ตรวจสอบ serviceDetailContent ก่อนใช้งาน innerHTML
+                serviceDetailContent.innerHTML = `
+                    <div class="detail-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h2>Service Not Found</h2>
+                    <p>We're sorry, but the service you requested could not be found. Please go back to our <a href="index.html#services">Services page</a> to explore our offerings.</p>
+                    <a href="index.html#services" class="btn btn-primary">Back to Services</a>
+                `;
+            }
             document.title = 'Fofana - Service Not Found';
         }
 
         // ซ่อน Loading State และแสดงเนื้อหาหลัก
-        serviceDetailSection.classList.remove('loading'); // ลบคลาส 'loading' ออก เพื่อแสดงเนื้อหาหลัก
-
-    }, 1000); // จำลองการโหลด 1 วินาที (เพื่อให้เห็น Loading State)
+        if (serviceDetailSection) { // ตรวจสอบ serviceDetailSection ก่อนลบคลาส
+            serviceDetailSection.classList.remove('loading'); 
+        }
+        
+    }, 1000); // จำลองการโหลด 1 วินาที
 });
